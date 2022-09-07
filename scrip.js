@@ -52,9 +52,21 @@ function imprimirHtml(nombreTarea) {
     botonEdit.textContent = "Edit";
     botonEdit.className = "button-edit";
     botonEdit.id = "editar"
+    let text;
     botonEdit.addEventListener('click', (e) => {
-        let nombreEdit = prompt('ingrese el texto');
-        h3Tareaa.textContent = `${nombreEdit}`
+        text = e.target.parentNode.parentNode.childNodes[0].childNodes[1];
+        formulario.style = "display: none;"
+        formulario2.style = "display: flex;"
+        
+    })
+    let butonFormEdit = document.getElementById('editar');
+    butonFormEdit.addEventListener('click',(e)=>{
+        e.preventDefault();
+        let tareaEditada = document.getElementById('tareaEdit').value;
+        text.textContent = tareaEditada;
+        formulario.style = "display: flex;"
+        formulario2.style = "display: none;"
+        text = null;
     })
     let butonDelete = document.createElement("button");
     butonDelete.id = 'deletee'
@@ -91,13 +103,18 @@ let contadorActive = 0;
 h3Active.style = 'display: none;'
 //envio de formulario
 formulario.addEventListener('submit', (e) => {
-    h3Task.textContent = `${contadorTask += 1}: task remaining`
-    h3Active.textContent = `${contadorActive += 1}: task active`
     e.preventDefault();
     let tarea = document.getElementById('tarea').value;
-    let index = arrayTareas.indexOf(tarea)
-    formulario.reset()
-    imprimirHtml(tarea);
+    if(/^\S/.test(tarea) && !/^[0-9]+$/.test(tarea) && !/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(tarea)){
+        h3Task.textContent = `${contadorTask += 1}: task remaining`
+        h3Active.textContent = `${contadorActive += 1}: task active`
+        imprimirHtml(tarea);
+        formulario.reset()
+    }
+    else{
+        formulario.reset()
+    }
+    
 
 })
 //complete
