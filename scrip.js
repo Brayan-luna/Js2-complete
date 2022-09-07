@@ -57,16 +57,24 @@ function imprimirHtml(nombreTarea) {
         text = e.target.parentNode.parentNode.childNodes[0].childNodes[1];
         formulario.style = "display: none;"
         formulario2.style = "display: flex;"
-        
+
     })
     let butonFormEdit = document.getElementById('editar');
-    butonFormEdit.addEventListener('click',(e)=>{
+    butonFormEdit.addEventListener('click', (e) => {
         e.preventDefault();
-        let tareaEditada = document.getElementById('tareaEdit').value;
-        text.textContent = tareaEditada;
-        formulario.style = "display: flex;"
-        formulario2.style = "display: none;"
-        text = null;
+        let tarea = document.getElementById('tareaEdit').value;
+        if (/^\S/.test(tarea) && !/^[0-9]+$/.test(tarea) && !/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(tarea)) {
+            e.preventDefault();
+            let tareaEditada = document.getElementById('tareaEdit').value;
+            text.textContent = tareaEditada;
+            formulario.style = "display: flex;"
+            formulario2.style = "display: none;"
+            text = null;
+        }
+        else {
+                     
+        }
+
     })
     let butonDelete = document.createElement("button");
     butonDelete.id = 'deletee'
@@ -103,18 +111,20 @@ let contadorActive = 0;
 h3Active.style = 'display: none;'
 //envio de formulario
 formulario.addEventListener('submit', (e) => {
+    document.getElementById('tarea').placeholder = "";
     e.preventDefault();
     let tarea = document.getElementById('tarea').value;
-    if(/^\S/.test(tarea) && !/^[0-9]+$/.test(tarea) && !/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(tarea)){
+    if (/^\S/.test(tarea) && !/^[0-9]+$/.test(tarea) && !/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(tarea)) {
         h3Task.textContent = `${contadorTask += 1}: task remaining`
         h3Active.textContent = `${contadorActive += 1}: task active`
         imprimirHtml(tarea);
         formulario.reset()
     }
-    else{
+    else {
         formulario.reset()
+        document.getElementById('tarea').placeholder = "ingresa los datos correctamente";
     }
-    
+
 
 })
 //complete
