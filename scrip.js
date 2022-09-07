@@ -37,7 +37,13 @@ function imprimirHtml(nombreTarea) {
             divContainer.className = `${divContadorfalse}`
             h3Active.textContent = `${contadorActive += 1}: task active`
             h3TaskComplete.textContent = `${contadorComplete -= 1}: task remaining`
-
+            butonDelete.addEventListener('click', (e) => {
+                h3Active.textContent = `${contadorActive -= 1}: task active`
+                h3TaskComplete.textContent = `${contadorComplete += 1}: task active`
+                e.target.parentNode.parentNode.remove();
+                // arrayTareas.splice(Index, 1,)
+        
+            })
         }
     }, false)
     //h3 tarea
